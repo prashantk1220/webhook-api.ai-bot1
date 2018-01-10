@@ -1,0 +1,11 @@
+{
+    "name": "bot1_webhook",
+    "description": "A Node based webhook for bot1 in dialogflow",
+    "repository": "https://github.com/prashantk1220/webhook-api.ai-bot1.git",
+    "keywords": [
+        "dialogflow",
+        "api.ai",
+        "chatbot",
+        "webhook"
+    ]
+}
