@@ -17,7 +17,7 @@ server.get('/', function(req, res){
     res.sendStatus(200);
 });
 
-server.post('/phone', function(req, res) {
+server.post('/fulfill', function(req, res) {
     var phone = req.body.result && req.body.result.parameters && req.body.result.parameters.phoneNumber ;
     if(phone != null){
         return res.json({
