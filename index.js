@@ -1,17 +1,21 @@
 'use strict' ;
 
-process.env.DEBUG = 'actions-on-google:*' ;
 
 const express = require('express') ; 
 const bodyParser = require('body-parser');
 const http = require('http');
 //const Assistant = require('actions-on-google').ApiAiAssistant ;
-
+//process.env.DEBUG = 'actions-on-google:*' ;
+var port = process.env.PORT || 5000;
 const server = express();
 
 server.use(bodyParser.urlencoded( {
     extended:true } ));
 server.use(bodyParser.json());
+
+server.get('/', function(req, res){
+    res.sendStatus(200);
+});
 
 server.post('/phone', function(req, res) {
     var phone = req.body.result && req.body.result.parameters && req.body.result.parameters.phoneNumber ;
@@ -31,7 +35,7 @@ server.post('/phone', function(req, res) {
     }
 });
 
-server.listen((process.env.port || 3000), function() {
+server.listen(port, function() {
     console.log("Bot webhook Server is up and running");
 });
 
