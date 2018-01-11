@@ -1,13 +1,20 @@
 'use strict' ;
 
-
 const express = require('express') ; 
 const bodyParser = require('body-parser');
 const http = require('http');
 //const Assistant = require('actions-on-google').ApiAiAssistant ;
 //process.env.DEBUG = 'actions-on-google:*' ;
-var port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 const server = express();
+
+const ACTION_PHONE = 'phone';
+const ACTION_BALANCE = 'available_balance';
+const ACTION_CARD = 'card';
+const ACTION_GENERAL = 'general';
+const ACTION_ACCOUNT = 'account';
+const ACTION_FALLBACK = 'input.unknown';
+const ACTION_WELCOME = 'input.welcome';
 
 server.use(bodyParser.urlencoded( {
     extended:true } ));
@@ -18,25 +25,50 @@ server.get('/', function(req, res){
 });
 
 server.post('/fulfill', function(req, res) {
-    var phone = req.body.result && req.body.result.parameters && req.body.result.parameters.phoneNumber ;
-    if(phone != null){
-        return res.json({
-            speech: 'Thank you, Please enter the otp',
-            displayText: 'Thank you, Please enter the otp',
-            source: 'node-webhook'
-        });
+    var action = req.body.result.action;
+    let msg = '';
+    var ctxOut;
+
+    switch(action){
+        case ACTION_WELCOME:
+            //todo 
+        break;
+
+        case ACTION_PHONE:
+            var phoneNumber = new String(req.body.result.parameters.phoneNumber) ;
+            if(phoneNumber.length >= 10){
+                msg = 'Thanks for entering the phone number, please verify the received otp' ;
+                ctxOut = [{'name': 'AccountInfo-phone-followup', 'lifespan': 1}] ;
+            }    
+            else{
+                msg = 'Please enter a registered phone number' ;
+                ctxOut = [{'name': 'AccountInfo-followup', 'lifespan': 1}] ;
+            }
+            sendResponse(msg, ctxOut);
+            break;
+
+        case ACTION_FALLBACK:
+            //todo
+            break;    
+
+        default:
+            sendResponse(msg);
+            break;
+
     }
-    else{
+
+    function sendResponse(msg, ctxOut=[]){
         return res.json({
-            speech: 'No Phone number provided, Please provide a valid phone number',
-            displayText: 'No Phone number provided, Please provide a valid phone number',
+            speech: msg,
+            displayText: msg, 
+            contextOut: ctxOut,
             source: 'node-webhook'
         });
     }
 });
 
 server.listen(port, function() {
-    console.log("Bot webhook Server is up and running");
+    console.log("Bot webhook Server is up and running on "+port);
 });
 
 
