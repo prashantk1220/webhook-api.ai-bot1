@@ -38,11 +38,11 @@ server.post('/fulfill', function(req, res) {
             var phoneNumber = new String(req.body.result.parameters.phoneNumber) ;
             if(phoneNumber.length >= 10){
                 msg = 'Thanks for entering the phone number, please verify the received otp' ;
-                ctxOut = [{'name': 'AccountInfo-phone-followup', 'lifespan': 1}] ;
+                ctxOut = [{'name': 'accountInfo-phone-followup', 'lifespan': 1}] ;
             }    
             else{
                 msg = 'Sorry, that seems to be incorrect. Please enter a registered phone number' ;
-                ctxOut = [{'name': 'AccountInfo-followup', 'lifespan': 1}, {'name': 'AccountInfo-phone-followup', 'lifespan': 0}] ;
+                ctxOut = [{'name': 'accountInfo-followup', 'lifespan': 1}, {'name': 'accountInfo-phone-followup', 'lifespan': 0}] ;
             }
             sendResponse(msg, ctxOut);
             break;
