@@ -41,8 +41,8 @@ server.post('/fulfill', function(req, res) {
                 ctxOut = [{'name': 'AccountInfo-phone-followup', 'lifespan': 1}] ;
             }    
             else{
-                msg = 'Please enter a registered phone number' ;
-                ctxOut = [{'name': 'AccountInfo-followup', 'lifespan': 1}] ;
+                msg = 'Sorry, that seems to be incorrect. Please enter a registered phone number' ;
+                ctxOut = [{'name': 'AccountInfo-followup', 'lifespan': 1}, {'name': 'AccountInfo-phone-followup', 'lifespan': 0}] ;
             }
             sendResponse(msg, ctxOut);
             break;
