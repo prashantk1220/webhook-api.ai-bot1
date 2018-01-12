@@ -70,7 +70,7 @@ server.post('/fulfill', function(req, res) {
                     sendResponseV1(msg, ctxOut); 
                 }
                 else{
-                    msg = 'Please specify a correct card Type eg: Visa or Mastercard etc' ;
+                    msg = 'Please specify a correct card Type along with the last 4 digits of card , Like eg: 1234 Visa or 4567 Mastercard etc' ;
                     ctxOut = [{'name': 'cardinfo-followup', 'lifespan': 1}, {'name': 'available-balance', 'lifespan': 0}, {'name': 'last-transaction', 'lifespan': 0}, {'name': 'last-5-transactions', 'lifespan': 0}] ;
                     sendResponseV1(msg, ctxOut); 
                 }  
@@ -114,6 +114,7 @@ server.post('/fulfill', function(req, res) {
             
 
             default:
+                msg = 'Sorry, I didn\'t get that, please say it again' ;
                 sendResponseV1(msg);
             break;
     
