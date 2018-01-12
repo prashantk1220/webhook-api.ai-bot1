@@ -35,7 +35,7 @@ server.post('/fulfill', function(req, res) {
         case ACTION_ACCOUNT:
             msg = 'Okay, I can  tell you about your : \n 1. Available balance \n 2. Last transaction \n 3. Last 5 transactions \n  What would you like to know more?' ;
             ctxOut = [{'name': 'available-balance', 'lifespan': 1}, {'name': 'last-transaction', 'lifespan': 1}, {'name': 'last-5-transactions', 'lifespan': 1}] ;
-            sendResponse(msg, ctxOut);   
+            sendResponseV1(msg, ctxOut);   
         break;
 
         case ACTION_PHONE:
@@ -49,13 +49,13 @@ server.post('/fulfill', function(req, res) {
                 msg = 'Sorry, that seems to be incorrect. Please enter a registered phone number' ;
                 ctxOut = [{'name': 'expecting-phone', 'lifespan': 1, 'parameters': {'phonenumber': phoneNumber}}, {'name': 'expecting-otp', 'lifespan': 0}] ;
             }
-            sendResponse(msg, ctxOut);
+            sendResponseV1(msg, ctxOut);
         break;
 
         case ACTION_CARD:
             msg = 'Okay, What would you like to know about the selected card. : \n 1. Available balance \n 2. Last transaction \n 3. Last 5 transactions ' ;
             ctxOut = [{'name': 'available-balance', 'lifespan': 1}, {'name': 'last-transaction', 'lifespan': 1}, {'name': 'last-5-transactions', 'lifespan': 1}, {'name': 'cardinfo-followup', 'lifespan': 0}] ;
-            sendResponse(msg, ctxOut);   
+            sendResponseV1(msg, ctxOut);   
         break;
 
         case ACTION_FALLBACK:
@@ -63,16 +63,16 @@ server.post('/fulfill', function(req, res) {
         break;    
 
         default:
-            sendResponse(msg);
+            sendResponseV1(msg);
             break;
 
     }
 
-    function sendResponse(msg, ctxOut=[]){
+    function sendResponseV1(msg, ctxOut=[]){
         return res.json({
             speech: msg,
             displayText: msg, 
-            outputContexts: ctxOut,
+            contextOut: ctxOut,
             source: 'node-webhook'
         });
     }
