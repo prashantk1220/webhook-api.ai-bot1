@@ -95,11 +95,11 @@ server.post('/fulfill', function(req, res) {
         });
     }
 
-    function processFallbackAction(action) {
+    function processFallbackAction(lastAction) {
         let msg = '';
         var ctxOut;
         
-        switch(action){
+        switch(lastAction){
             case ACTION_CARD:
                 msg = 'Sorry I did not get that, Could you please say it again : \n 1. Available balance \n 2. Last transaction \n 3. Last 5 transactions ' ;
                 ctxOut = [{'name': 'available-balance', 'lifespan': 1}, {'name': 'last-transaction', 'lifespan': 1}, {'name': 'last-5-transactions', 'lifespan': 1}, {'name': 'cardinfo-followup', 'lifespan': 0}] ;
