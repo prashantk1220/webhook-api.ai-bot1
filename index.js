@@ -12,7 +12,7 @@ const ACTION_PHONE = 'phone';
 const ACTION_BALANCE = 'available_balance';
 const ACTION_LAST_TRANSACTION = 'last_transaction';
 const ACTION_TRANSACTIONS = 'last_5_transaction';
-const ACTION_CARD = 'card';
+const ACTION_CARD = 'card_info';
 const ACTION_GENERAL = 'general';
 const ACTION_ACCOUNT = 'account';
 const ACTION_FALLBACK = 'input.unknown';
@@ -54,7 +54,7 @@ server.post('/fulfill', function(req, res) {
 
         case ACTION_CARD:
             msg = 'Okay, What would you like to know about the selected card. : \n 1. Available balance \n 2. Last transaction \n 3. Last 5 transactions ' ;
-            ctxOut = [{'name': 'available-balance', 'lifespan': 1}, {'name': 'last-transaction', 'lifespan': 1}, {'name': 'last-5-transactions', 'lifespan': 1}] ;
+            ctxOut = [{'name': 'available-balance', 'lifespan': 1}, {'name': 'last-transaction', 'lifespan': 1}, {'name': 'last-5-transactions', 'lifespan': 1}, {'name': 'cardinfo-followup', 'lifespan': 0}] ;
             sendResponse(msg, ctxOut);   
         break;
 
