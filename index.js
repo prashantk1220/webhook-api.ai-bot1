@@ -63,7 +63,7 @@ server.post('/fulfill', function(req, res) {
     
             case ACTION_CARD:
                 lastAction = ACTION_CARD;
-                var cardType = req.body.result.parameters.cardNetwork.original ;
+                var cardType = req.body.result.parameters.cardNetwork ;
                 if(CARD_TYPE.indexOf(cardType) > -1) {
                     msg = 'Okay, What would you like to know about the selected card. : \n 1. Available balance \n 2. Last transaction \n 3. Last 5 transactions ' ;
                     ctxOut = [{'name': 'available-balance', 'lifespan': 1}, {'name': 'last-transaction', 'lifespan': 1}, {'name': 'last-5-transactions', 'lifespan': 1}, {'name': 'cardinfo-followup', 'lifespan': 0}] ;
