@@ -52,8 +52,11 @@ server.post('/fulfill', function(req, res) {
             sendResponse(msg, ctxOut);
         break;
 
-        case ACTION_BALANCE:
-            
+        case ACTION_CARD:
+            msg = 'Okay, What would you like to know about the selected card. : \n 1. Available balance \n 2. Last transaction \n 3. Last 5 transactions ' ;
+            ctxOut = [{'name': 'available-balance', 'lifespan': 1}, {'name': 'last-transaction', 'lifespan': 1}, {'name': 'last-5-transactions', 'lifespan': 1}] ;
+            sendResponse(msg, ctxOut);   
+        break;
 
         case ACTION_FALLBACK:
             //todo
