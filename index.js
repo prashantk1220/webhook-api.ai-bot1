@@ -10,11 +10,13 @@ const server = express();
 
 const ACTION_PHONE = 'phone';
 const ACTION_BALANCE = 'available_balance';
+const ACTION_LAST_TRANSACTION = 'last_transaction';
+const ACTION_TRANSACTIONS = 'last_5_transaction';
 const ACTION_CARD = 'card';
 const ACTION_GENERAL = 'general';
 const ACTION_ACCOUNT = 'account';
 const ACTION_FALLBACK = 'input.unknown';
-const ACTION_WELCOME = 'input.welcome';
+const ACTION_MENU = 'main_menu';
 
 server.use(bodyParser.urlencoded( {
     extended:true } ));
@@ -30,8 +32,10 @@ server.post('/fulfill', function(req, res) {
     var ctxOut;
 
     switch(action){
-        case ACTION_WELCOME:
-            //todo 
+        case ACTION_ACCOUNT:
+            msg = 'Okay, I can  tell you about your : \n 1. Available balance \n 2. Last transaction \n 3. Last 5 transactions \n  What would you like to know more?' ;
+            ctxOut = [{'name': 'available-balance', 'lifespan': 1}, {'name': 'last-transaction', 'lifespan': 1}, {'name': 'last-5-transactions', 'lifespan': 1}] ;
+            sendResponse(msg, ctxOut);   
         break;
 
         case ACTION_PHONE:
@@ -46,11 +50,14 @@ server.post('/fulfill', function(req, res) {
                 ctxOut = [{'name': 'expecting-phone', 'lifespan': 1, 'parameters': {'phonenumber': phoneNumber}}, {'name': 'expecting-otp', 'lifespan': 0}] ;
             }
             sendResponse(msg, ctxOut);
-            break;
+        break;
+
+        case ACTION_BALANCE:
+            
 
         case ACTION_FALLBACK:
             //todo
-            break;    
+        break;    
 
         default:
             sendResponse(msg);
@@ -62,7 +69,7 @@ server.post('/fulfill', function(req, res) {
         return res.json({
             speech: msg,
             displayText: msg, 
-            contextOut: ctxOut,
+            outputContexts: ctxOut,
             source: 'node-webhook'
         });
     }
