@@ -35,8 +35,8 @@ server.post('/fulfill', function(req, res) {
         break;
 
         case ACTION_PHONE:
-            var phone = (req.body.result.contexts.parameters.phonenumber != '') ? req.body.result.contexts.parameters.phonenumber : req.body.result.parameters.phonenumber
-            var phoneNumber = new String(phone) ;
+            //var phone = (req.body.result.contexts[0].parameters.phonenumber != '') ? req.body.result.contexts[0].parameters.phonenumber : req.body.result.parameters.phonenumber
+            var phoneNumber = new String(req.body.result.parameters.phonenumber) ;
             if(phoneNumber.length >= 10){
                 msg = 'Thanks for entering the phone number, please verify the received otp' ;
                 ctxOut = [{'name': 'expecting-otp', 'lifespan': 1}, {'name': 'expecting-phone', 'lifespan': 0}] ;
